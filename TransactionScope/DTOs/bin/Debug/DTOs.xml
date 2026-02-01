@@ -1,0 +1,40 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+DTOs
+</name>
+</assembly>
+<members>
+<member name="T:DTOs.My.Resources.Resources">
+<summary>
+  ローカライズされた文字列などを検索するための、厳密に型指定されたリソース クラスです。
+</summary>
+</member>
+<member name="P:DTOs.My.Resources.Resources.ResourceManager">
+<summary>
+  このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
+</summary>
+</member>
+<member name="P:DTOs.My.Resources.Resources.Culture">
+<summary>
+  すべてについて、現在のスレッドの CurrentUICulture プロパティをオーバーライドします
+  現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
+</summary>
+</member>
+<member name="T:DTOs.SubjectDto">
+ <summary>
+ Subject テーブルの DTO（自動生成）
+ </summary>
+</member>
+<member name="P:DTOs.SubjectDto.SubjectID">
+ <summary>SubjectID 列</summary>
+</member>
+<member name="P:DTOs.SubjectDto.SubjectName">
+ <summary>SubjectName 列</summary>
+</member>
+<member name="P:DTOs.SubjectDto.RowVersion">
+ <summary>RowVersion 列</summary>
+</member>
+</members>
+</doc>

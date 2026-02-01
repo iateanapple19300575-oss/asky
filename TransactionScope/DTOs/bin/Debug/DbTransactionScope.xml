@@ -1,0 +1,450 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+DbTransactionScope
+</name>
+</assembly>
+<members>
+<member name="T:My.Resources.Resources">
+<summary>
+  ローカライズされた文字列などを検索するための、厳密に型指定されたリソース クラスです。
+</summary>
+</member>
+<member name="P:My.Resources.Resources.ResourceManager">
+<summary>
+  このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
+</summary>
+</member>
+<member name="P:My.Resources.Resources.Culture">
+<summary>
+  すべてについて、現在のスレッドの CurrentUICulture プロパティをオーバーライドします
+  現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
+</summary>
+</member>
+<member name="T:CodeGenForm">
+ <summary>
+ DTO → CRUD 自動生成ツール（複合 PK / RowVersion / FW3.5 対応）
+ </summary>
+</member>
+<member name="M:CodeGenForm.btnLoadAssembly_Click(System.Object,System.EventArgs)">
+ <summary>
+ DLL を読み込み、DTO 型一覧を取得して ListBox に表示
+ </summary>
+</member>
+<member name="M:CodeGenForm.GetDtoTypes(System.Reflection.Assembly)">
+ <summary>
+ DTO 型一覧を取得（FW3.5 対応）
+ </summary>
+</member>
+<member name="M:CodeGenForm.lstDto_SelectedIndexChanged(System.Object,System.EventArgs)">
+ <summary>
+ DTO を選択すると CRUD コードを生成
+ </summary>
+</member>
+<member name="M:CodeGenForm.btnSaveCrud_Click(System.Object,System.EventArgs)">
+ <summary>
+ CRUD コードを保存
+ </summary>
+</member>
+<member name="T:ColumnNameAttribute">
+ <summary>
+ DTO プロパティに対応する DB カラム名を指定するための属性。
+ プロパティ名とカラム名が異なる場合に使用する。
+ </summary>
+</member>
+<member name="P:ColumnNameAttribute.Name">
+ <summary>
+ DB カラム名。
+ </summary>
+</member>
+<member name="M:ColumnNameAttribute.#ctor(System.String)">
+ <summary>
+ カラム名を指定して初期化する。
+ </summary>
+ <param name="name">DB カラム名。</param>
+</member>
+<member name="T:PrimaryKeyAttribute">
+ <summary>主キーであることを示す属性。</summary>
+</member>
+<member name="T:RowVersionAttribute">
+ <summary>RowVersion 列であることを示す属性。</summary>
+</member>
+<member name="T:CodeGenerationForm">
+ <summary>
+ RowVersion 対応 DTO / CRUD 自動生成ツールの WinForms GUI。
+ </summary>
+</member>
+<member name="M:CodeGenerationForm.btnConnect_Click(System.Object,System.EventArgs)">
+ <summary>
+ 接続ボタン押下 → テーブル一覧を取得。
+ </summary>
+</member>
+<member name="M:CodeGenerationForm.lstTables_SelectedIndexChanged(System.Object,System.EventArgs)">
+ <summary>
+ テーブル選択 → DTO / CRUD コードを生成して表示。
+ </summary>
+</member>
+<member name="M:CodeGenerationForm.btnSaveDto_Click(System.Object,System.EventArgs)">
+ <summary>
+ DTO 保存ボタン。
+ </summary>
+</member>
+<member name="M:CodeGenerationForm.btnSaveCrud_Click(System.Object,System.EventArgs)">
+ <summary>
+ CRUD 保存ボタン。
+ </summary>
+</member>
+<member name="M:CodeGenerationForm.SaveCode(System.String,System.String)">
+ <summary>
+ ファイル保存処理。
+ </summary>
+</member>
+<member name="T:BaseEntity">
+ <summary>
+ すべてのエンティティが継承する基底クラス。
+ RowVersion（RowVer）を保持し、UPDATE / DELETE 時の
+ 楽観的ロック（競合検知）に使用される。
+ </summary>
+</member>
+<member name="P:BaseEntity.RowVer">
+ <summary>
+ データベースの rowversion 列に対応するバイト配列。
+ 更新や削除の際、WHERE 句で一致確認を行うことで
+ 他ユーザによる同時更新を検知するために使用される。
+ </summary>
+</member>
+<member name="T:DbExecutor">
+ <summary>
+ SQL 実行を一元管理するクラス。
+ ・実行 SQL（値埋め込み前 / 値埋め込み後）
+ ・ログレベル対応（LogEntry + LogLevel）
+ ・DEBUG 時は RAW + EXECUTED を出力
+ ・例外発生時も RAW + EXECUTED を出力
+ ・DTO マッピング最速化（Ordinal キャッシュ + PropertyMap）
+ ・BulkCopy
+ ・トランザクション対応
+ ・FW3.5 完全対応
+ </summary>
+</member>
+<member name="P:DbExecutor.LogWriter">
+ <summary>
+ SQL ログ出力先（ファイル、Debug、複合ロガーなど）。
+ LogEntry を受け取り、出力先はロガー側で決定する。
+ </summary>
+</member>
+<member name="F:DbExecutor._ordinalCache">
+ <summary>DataReader のカラム名 → Ordinal のキャッシュ。</summary>
+</member>
+<member name="T:DbExecutor.PropertyMap">
+ <summary>DTO プロパティマップ（プロパティ配列 + Ordinal 配列）。</summary>
+</member>
+<member name="F:DbExecutor._propertyMapCache">
+ <summary>DTO 型 → PropertyMap のキャッシュ。</summary>
+</member>
+<member name="M:DbExecutor.#ctor(DbTransactionScope)">
+ <summary>
+ トランザクションありのコンストラクタ。
+ </summary>
+</member>
+<member name="M:DbExecutor.#ctor(System.String)">
+ <summary>
+ トランザクションなしのコンストラクタ。
+ </summary>
+</member>
+<member name="M:DbExecutor.CreateCommand(System.String,System.Data.SqlClient.SqlParameter[])">
+ <summary>
+ SqlCommand を生成し、必要に応じてトランザクションとパラメータを設定する。
+ Prepare ログ（Debug）を出力する。
+ </summary>
+</member>
+<member name="M:DbExecutor.BuildExecutedSql(System.String,System.Data.SqlClient.SqlParameter[])">
+ <summary>
+ パラメータを実際の SQL 値に埋め込んだ「実行 SQL」を生成する。
+ ログ出力用。
+ </summary>
+</member>
+<member name="M:DbExecutor.WriteSqlLog(LogLevel,System.String,System.String,System.Data.SqlClient.SqlParameter[],System.Int64)">
+ <summary>
+ SQL ログを LogWriter に渡す。
+ DEBUG 時は「値埋め込み前」と「値埋め込み後」の両方を出力する。
+ </summary>
+</member>
+<member name="M:DbExecutor.InsertReturningRowVersion(System.String,System.String,System.String,System.Data.SqlClient.SqlParameter[])">
+ <summary>
+ RowVersion を持つテーブルに対して INSERT を行い、
+ 自動生成された RowVersion を返す API。
+ </summary>
+ <param name="tableName">テーブル名</param>
+ <param name="columns">カラム名（例: "Name, Age, CreatedAt"）</param>
+ <param name="values">VALUES 句（例: "@Name, @Age, @CreatedAt"）</param>
+ <param name="parameters">パラメータ</param>
+ <returns>INSERT 後の RowVersion（Byte()）</returns>
+</member>
+<member name="M:DbExecutor.UpdateAndFetch``1(System.String,System.String,System.String,System.Object,System.Byte[],System.Data.SqlClient.SqlParameter[])">
+ <summary>
+ UPDATE を実行し、その後に最新の DTO を SELECT して返す API。
+ RowVersion を使用した排他制御を行う。
+ </summary>
+ <typeparam name="T">DTO 型</typeparam>
+ <param name="tableName">テーブル名</param>
+ <param name="setClause">SET 句</param>
+ <param name="keyColumn">主キー列名</param>
+ <param name="keyValue">主キー値</param>
+ <param name="rowVersion">更新前の RowVersion</param>
+ <param name="parameters">SET 句のパラメータ</param>
+ <returns>更新後の最新 DTO</returns>
+</member>
+<member name="M:DbExecutor.UpdateWithRowVersion(System.String,System.String,System.String,System.Object,System.Byte[],System.Data.SqlClient.SqlParameter[])">
+ <summary>
+ RowVersion を使用した排他制御付き UPDATE。
+ 更新件数が 0 件の場合は排他エラーとして例外を投げる。
+ </summary>
+ <param name="tableName">更新対象テーブル名</param>
+ <param name="setClause">SET 句（例: "Name = @Name, UpdatedAt = @UpdatedAt"）</param>
+ <param name="keyColumn">主キー列名（例: "Id"）</param>
+ <param name="keyValue">主キー値</param>
+ <param name="rowVersion">RowVersion の Byte() 値</param>
+ <param name="parameters">SET 句に対応するパラメータ</param>
+</member>
+<member name="M:DbExecutor.DeleteWithRowVersion(System.String,System.String,System.Object,System.Byte[])">
+ <summary>
+ RowVersion を使用した排他制御付き DELETE。
+ 削除件数が 0 件の場合は排他エラーとして例外を投げる。
+ </summary>
+ <param name="tableName">テーブル名</param>
+ <param name="keyColumn">主キー列名</param>
+ <param name="keyValue">主キー値</param>
+ <param name="rowVersion">RowVersion の Byte() 値</param>
+</member>
+<member name="T:DbTransactionScope">
+ <summary>
+ トランザクション管理クラス。
+ Using ブロックを抜けると自動的に Commit または Rollback を行う。
+ DbExecutor と組み合わせて使用する。
+ </summary>
+</member>
+<member name="F:DbTransactionScope.Connection">
+ <summary>
+ 内部で使用する SqlConnection。
+ DbExecutor から参照される。
+ </summary>
+</member>
+<member name="F:DbTransactionScope.Transaction">
+ <summary>
+ 内部で使用する SqlTransaction。
+ DbExecutor から参照される。
+ </summary>
+</member>
+<member name="F:DbTransactionScope._completed">
+ <summary>
+ Complete が呼ばれたかどうか。
+ True → Commit、False → Rollback。
+ </summary>
+</member>
+<member name="M:DbTransactionScope.#ctor(System.String)">
+ <summary>
+ 接続文字列を指定してトランザクションを開始する。
+ </summary>
+ <param name="connectionString">DB 接続文字列。</param>
+</member>
+<member name="M:DbTransactionScope.Complete">
+ <summary>
+ トランザクションを正常終了（Commit）する。
+ </summary>
+</member>
+<member name="M:DbTransactionScope.Dispose">
+ <summary>
+ Using ブロック終了時に Commit または Rollback を行う。
+ </summary>
+</member>
+<member name="T:CrudCodeGenerator">
+ <summary>
+ RowVersion 対応の DTO / CRUD コードを自動生成するクラス（FW3.5 最適化版）。
+ ・DTO 生成（ColumnNameAttribute 付き）
+ ・INSERT（RowVersion 取得）
+ ・UPDATE（RowVersion 排他制御 + 更新後 DTO 取得）
+ ・DELETE（RowVersion 排他制御）
+ </summary>
+</member>
+<member name="M:CrudCodeGenerator.GenerateDto(TableInfo)">
+ <summary>
+ DTO クラスのコードを生成する。
+ ColumnNameAttribute を自動付与し、RowVersion は Byte() として生成する。
+ </summary>
+</member>
+<member name="M:CrudCodeGenerator.GenerateCrudRepository(TableInfo)">
+ <summary>
+ CRUD をまとめた Repository クラスのコードを生成する。
+ RowVersion 排他制御 API を自動で呼び出す。
+ </summary>
+</member>
+<member name="M:CrudCodeGenerator.GetVbType(ColumnInfo)">
+ <summary>
+ SQL 型 → VB 型への変換。
+ RowVersion は Byte() を返す。
+ </summary>
+</member>
+<member name="T:DtoCrudGenerator">
+ <summary>
+ DTO → CRUD 自動生成（複合 PK / RowVersion / FW3.5 対応）
+ </summary>
+</member>
+<member name="M:DtoCrudGenerator.GenerateRepository(System.Type,System.String)">
+ <summary>
+ DTO 型から Repository クラスのコードを生成する。
+ </summary>
+</member>
+<member name="T:DtoToSqlGenerator">
+ <summary>
+ DTO から SQL Server の CREATE TABLE 文を逆生成するクラス（FW3.5 対応）。
+ ColumnNameAttribute / PrimaryKeyAttribute / RowVersionAttribute を解釈する。
+ </summary>
+</member>
+<member name="M:DtoToSqlGenerator.GenerateCreateTable(System.Type,System.String)">
+ <summary>
+ DTO 型から CREATE TABLE 文を生成する。
+ </summary>
+ <param name="dtoType">DTO の Type（例: GetType(UsersDto)）</param>
+ <param name="tableName">テーブル名（例: "Users"）</param>
+</member>
+<member name="M:DtoToSqlGenerator.ExtractColumns(System.Type)">
+ <summary>
+ DTO の Property から ColumnInfo を抽出する。
+ </summary>
+</member>
+<member name="T:SqlSchemaReader">
+ <summary>
+ SQL Server の INFORMATION_SCHEMA を読み取り、
+ TableInfo / ColumnInfo に変換するクラス。
+ RowVersion や主キーも自動判定する。
+ </summary>
+</member>
+<member name="M:SqlSchemaReader.LoadTableInfo(System.String,System.String)">
+ <summary>
+ 指定したテーブルのスキーマ情報を取得する。
+ </summary>
+</member>
+<member name="T:DebugLogger">
+ <summary>
+ イミディエイトウィンドウ（Debug.WriteLine）にログを出力するロガー。
+ 主に DEBUG ビルド時に使用する。
+ </summary>
+</member>
+<member name="P:DebugLogger.MinimumLevel">
+ <summary>
+ 出力する最低ログレベル。
+ DEBUG → 全ログ
+ INFO → INFO 以上
+ など。
+ </summary>
+</member>
+<member name="M:DebugLogger.Write(SqlLogEntry)">
+ <summary>
+ ログを書き込む。
+ </summary>
+</member>
+<member name="T:LogLevel">
+ <summary>
+ ログレベルを表す列挙体。
+ </summary>
+</member>
+<member name="F:LogLevel.Debug">
+ <summary>デバッグ用の詳細ログ。</summary>
+</member>
+<member name="F:LogLevel.Info">
+ <summary>通常の情報ログ。</summary>
+</member>
+<member name="F:LogLevel.Warn">
+ <summary>注意すべき警告ログ。</summary>
+</member>
+<member name="F:LogLevel.Error">
+ <summary>例外や障害などの重大ログ。</summary>
+</member>
+<member name="T:LogLevelHelper">
+ <summary>
+ 文字列を LogLevel に変換するヘルパー。
+ Settings.settings の値を安全にパースするために使用する。
+ </summary>
+</member>
+<member name="M:LogLevelHelper.Parse(System.String,LogLevel)">
+ <summary>
+ 文字列を LogLevel に変換する。
+ 不正な値の場合は defaultLevel を返す。
+ </summary>
+</member>
+<member name="T:MultiLogger">
+ <summary>
+ 複数のロガーに同時出力するロガー。
+ 例：ファイル + Debug、ファイル + メール通知など。
+ </summary>
+</member>
+<member name="M:MultiLogger.#ctor(System.Action{SqlLogEntry}[])">
+ <summary>
+ 複数のロガーをまとめて初期化する。
+ </summary>
+ <param name="loggers">ログ出力先のデリゲート配列。</param>
+</member>
+<member name="M:MultiLogger.Write(SqlLogEntry)">
+ <summary>
+ すべてのロガーにログを書き込む。
+ </summary>
+</member>
+<member name="T:Program">
+ <summary>
+ アプリケーションのエントリポイント。
+ ・DEBUG 時は DebugLogger を追加し、ログレベル Debug に強制
+ ・RELEASE 時は Settings.settings のログレベルを使用
+ ・SingleFileLogger によりログファイルは 1 つだけ
+ </summary>
+</member>
+<member name="T:SingleFileLogger">
+ <summary>
+ ログレベルに応じて出力する／しないを制御し、
+ ログファイルは 1 つだけにまとめるロガー。
+ 日次ローテーション対応。
+ </summary>
+</member>
+<member name="P:SingleFileLogger.MinimumLevel">
+ <summary>
+ 出力する最低ログレベル（外部定義で設定）。
+ ERROR → ERROR のみ
+ WARN  → WARN + ERROR
+ INFO  → INFO + WARN + ERROR
+ DEBUG → 全レベル
+ </summary>
+</member>
+<member name="M:SingleFileLogger.#ctor(System.String,System.Int32)">
+ <summary>
+ ロガーを初期化する。
+ </summary>
+</member>
+<member name="M:SingleFileLogger.GetLogFilePath">
+ <summary>
+ ログファイルパス（単一ファイル）。
+ </summary>
+</member>
+<member name="M:SingleFileLogger.CleanupOldLogs">
+ <summary>
+ 古いログファイルを削除する。
+ </summary>
+</member>
+<member name="M:SingleFileLogger.Write(SqlLogEntry)">
+ <summary>
+ ログを書き込む。
+ DbExecutor から呼ばれる。
+ </summary>
+</member>
+<member name="T:SqlLogEntry">
+ <summary>
+ ログ 1 件分の情報を保持するクラス。
+ </summary>
+</member>
+<member name="P:SqlLogEntry.Level">
+ <summary>ログレベル。</summary>
+</member>
+<member name="P:SqlLogEntry.Message">
+ <summary>ログメッセージ本文。</summary>
+</member>
+</members>
+</doc>
