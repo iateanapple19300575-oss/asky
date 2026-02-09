@@ -1,0 +1,11 @@
+C:\TEST\No_05\PunchCheck\bin\Debug\PunchCheck.exe
+C:\TEST\No_05\PunchCheck\bin\Debug\PunchCheck.pdb
+C:\TEST\No_05\PunchCheck\bin\Debug\PunchCheck.xml
+C:\TEST\No_05\PunchCheck\obj\Debug\PunchCheck.vbproj.AssemblyReference.cache
+C:\TEST\No_05\PunchCheck\obj\Debug\PunchCheck.Form1.resources
+C:\TEST\No_05\PunchCheck\obj\Debug\PunchCheck.Resources.resources
+C:\TEST\No_05\PunchCheck\obj\Debug\PunchCheck.vbproj.GenerateResource.cache
+C:\TEST\No_05\PunchCheck\obj\Debug\PunchCheck.vbproj.CoreCompileInputs.cache
+C:\TEST\No_05\PunchCheck\obj\Debug\PunchCheck.exe
+C:\TEST\No_05\PunchCheck\obj\Debug\PunchCheck.xml
+C:\TEST\No_05\PunchCheck\obj\Debug\PunchCheck.pdb
