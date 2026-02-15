@@ -19,7 +19,7 @@
         ''' 主キー（整数 ID）。
         ''' Repository の PrimaryKey と一致する必要がある。
         ''' </summary>
-        Public Property ID As Integer
+        Public Property Id As Integer
 
         '===========================================================
         ' 楽観的ロック

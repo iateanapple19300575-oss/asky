@@ -83,10 +83,14 @@
     <Compile Include="Databese\Automatic\Core\AutomaticModel.vb" />
     <Compile Include="Databese\Automatic\Core\AutomaticQueryService.vb" />
     <Compile Include="Databese\Automatic\Core\AutomaticRepository.vb" />
+    <Compile Include="Databese\Automatic\Core\AutomaticRequest.vb" />
     <Compile Include="Databese\Automatic\Core\AutomaticService.vb" />
     <Compile Include="Databese\Automatic\Core\AutomaticServiceOperation.vb" />
-    <Compile Include="Databese\Automatic\Core\IAutomaticQueryCommand.vb" />
-    <Compile Include="Databese\Automatic\Core\IAutomaticRepository.vb" />
+    <Compile Include="Databese\Automatic\Interface\IAutomaticModel.vb" />
+    <Compile Include="Databese\Automatic\Interface\IAutomaticEntity.vb" />
+    <Compile Include="Databese\Automatic\Interface\IAutomaticRequest.vb" />
+    <Compile Include="Databese\Automatic\Interface\IAutomaticQueryCommand.vb" />
+    <Compile Include="Databese\Automatic\Interface\IAutomaticRepository.vb" />
     <Compile Include="Databese\Automatic\Core\IAutomaticServiceCommand.vb" />
     <Compile Include="Databese\Automatic\Core\SqlExecutor.vb" />
     <Compile Include="Databese\Automatic\Mapper\DataRowMapper.vb" />

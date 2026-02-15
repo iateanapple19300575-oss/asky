@@ -34,7 +34,7 @@ Public Class ExecuteSqlWithBuilder
     ''' <param name="entity">INSERT 対象のエンティティ。</param>
     ''' <param name="tableName">対象テーブル名。</param>
     ''' <returns>影響を受けた行数。</returns>
-    Public Shared Function InsertWithAutomaticSql(Of T As AutomaticEntity)(ByVal exec As SqlExecutor, entity As T, tableName As String) As Integer
+    Public Shared Function InsertWithAutomaticSql(Of T As IAutomaticEntity)(ByVal exec As SqlExecutor, entity As T, tableName As String) As Integer
         Dim props = GetType(T).GetProperties()
         Dim columnNames As New List(Of String)()
         Dim paramNames As New List(Of String)()
@@ -92,7 +92,7 @@ Public Class ExecuteSqlWithBuilder
     ''' <param name="after">更新後のエンティティ。</param>
     ''' <param name="tableName">対象テーブル名。</param>
     ''' <returns>影響を受けた行数。差分なしの場合は 0。</returns>
-    Public Shared Function UpdateWithAutomaticSql(Of T As AutomaticEntity)(ByVal exec As SqlExecutor, before As T, after As T, tableName As String) As Integer
+    Public Shared Function UpdateWithAutomaticSql(Of T As IAutomaticEntity)(ByVal exec As SqlExecutor, before As T, after As T, tableName As String) As Integer
         Dim diff = DiffBuilder.CreateDiff(before, after)
         If diff.Count = 0 Then
             Return 0 ' 変更なし
@@ -144,7 +144,7 @@ Public Class ExecuteSqlWithBuilder
     ''' <param name="entity">削除対象のエンティティ（Id と RowVersion を使用）。</param>
     ''' <param name="tableName">対象テーブル名。</param>
     ''' <returns>影響を受けた行数。</returns>
-    Public Shared Function DeleteWithAutomaticSql(Of T As AutomaticEntity)(ByVal exec As SqlExecutor, entity As T, tableName As String) As Integer
+    Public Shared Function DeleteWithAutomaticSql(Of T As IAutomaticEntity)(ByVal exec As SqlExecutor, entity As T, tableName As String) As Integer
         Dim idProp As PropertyInfo = entity.GetType().GetProperty("Id")
         Dim idValue As Object = idProp.GetValue(entity, Nothing)
 

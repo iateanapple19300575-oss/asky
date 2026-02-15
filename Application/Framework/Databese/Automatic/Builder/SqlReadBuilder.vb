@@ -18,7 +18,7 @@ Public Class SqlReadBuilder
     ''' <param name="id">取得対象のID</param>
     ''' <param name="tableName">対象テーブル名</param>
     ''' <returns>存在する場合：取得したエンティティ／存在しない場合：Nothing</returns>
-    Public Shared Function GetById(Of T As {AutomaticEntity, New})(exec As SqlExecutor, id As Integer, tableName As String) As T
+    Public Shared Function GetById(Of T As {IAutomaticEntity, New})(exec As SqlExecutor, id As Integer, tableName As String) As T
         ' 取得SQL
         Dim sql As String = "SELECT * FROM " & tableName & " WHERE Id = @Id;"
 
@@ -49,7 +49,7 @@ Public Class SqlReadBuilder
     ''' <param name="exec">SQL実行を行う SqlExecutor</param>
     ''' <param name="tableName">対象テーブル名</param>
     ''' <returns>エンティティのリスト。</returns>
-    Public Shared Function ReadAllWithEntity(Of T As {AutomaticEntity, New})(exec As SqlExecutor, tableName As String, ByVal sortItems As String, ByVal sortOrder As String) As List(Of T)
+    Public Shared Function ReadAllWithEntity(Of T As {IAutomaticEntity, New})(exec As SqlExecutor, tableName As String, ByVal sortItems As String, ByVal sortOrder As String) As List(Of T)
         ' 取得SQL
         Dim sql As String = "SELECT * FROM " & tableName & ";"
         Dim list As New List(Of T)
@@ -80,7 +80,7 @@ Public Class SqlReadBuilder
     ''' <param name="exec">SQL実行を行う SqlExecutor</param>
     ''' <param name="tableName">対象テーブル</param>
     ''' <returns>DataTable。</returns>
-    Public Shared Function ReadAllWithDataTable(Of T As {AutomaticEntity, New})(exec As SqlExecutor, tableName As String) As DataTable
+    Public Shared Function ReadAllWithDataTable(Of T As {IAutomaticEntity, New})(exec As SqlExecutor, tableName As String) As DataTable
         ' 取得SQL
         Dim sql As String = "SELECT * FROM " & tableName & ";"
 
@@ -134,7 +134,7 @@ Public Class SqlReadBuilder
     ''' <param name="whereClause">WHERE 句（例: "WHERE Rate > @Rate"）。</param>
     ''' <param name="parameters">SQL パラメータのリスト。</param>
     ''' <returns>条件に一致したエンティティのリスト。</returns>
-    Public Shared Function Find(Of T As {AutomaticEntity, New})(exec As SqlExecutor,
+    Public Shared Function Find(Of T As {IAutomaticEntity, New})(exec As SqlExecutor,
                                                            tableName As String,
                                                            whereClause As String,
                                                            parameters As List(Of SqlParameter)) As List(Of T)

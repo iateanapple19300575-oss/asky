@@ -65,7 +65,8 @@ Public NotInheritable Class ReaderMapper
             If value IsNot Nothing AndAlso prop.PropertyType IsNot value.GetType() Then
                 Try
                     value = Convert.ChangeType(value, prop.PropertyType)
-                Catch
+                Catch ex As Exception
+                    MessageBox.Show("予期しないエラーが発生しました。")
                     ' 変換できない場合はそのままセット（Byte() など）
                 End Try
             End If

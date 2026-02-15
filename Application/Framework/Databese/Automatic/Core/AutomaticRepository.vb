@@ -8,7 +8,7 @@ Namespace Framework.Databese.Automatic
     ''' エンティティ T に対する CRUD 操作の共通基盤を提供し、
     ''' SqlExecutor を通じてデータベースアクセスを行う。
     ''' </summary>
-    Public MustInherit Class AutomaticRepository(Of T As {AutomaticEntity, New})
+    Public MustInherit Class AutomaticRepository(Of T As {AutomaticDto, New})
         Implements IAutomaticRepository(Of T)
 
         Protected Const EXCEPTION_EXCLUSIVE_MESSAGE As String =
@@ -22,13 +22,13 @@ Namespace Framework.Databese.Automatic
 
         Protected ReadOnly Exec As SqlExecutor
 
-        Protected ReadOnly Property Id As String
+        Protected Overridable ReadOnly Property Id As String
             Get
                 Return "Id"
             End Get
         End Property
 
-        Protected ReadOnly Property RowVersion As String
+        Protected Overridable ReadOnly Property RowVersion As String
             Get
                 Return "RowVersion"
             End Get
@@ -39,6 +39,9 @@ Namespace Framework.Databese.Automatic
 
         Protected excludeColumns As List(Of String) =
         New List(Of String)(New String() {"ID", "Create_Date", "Create_User", "Update_Date", "Update_User"})
+
+        Public Sub New()
+        End Sub
 
         Public Sub New(exec As SqlExecutor)
             Me.Exec = exec
@@ -230,45 +233,6 @@ Namespace Framework.Databese.Automatic
 
             Return DirectCast(value, Byte())
         End Function
-
-
-        '        Public Function FindByLectureData(fromDate As DateTime, toDate As DateTime) As List(Of T) Implements IAutomaticRepository(Of T).FindByLectureData
-        '            Dim parameters As New List(Of SqlParameter)()
-        '            parameters.Add(New SqlParameter("@StartDate", fromDate))
-        '            parameters.Add(New SqlParameter("@EndDate", toDate))
-        '            Dim list As New List(Of T)()
-
-        '            Dim sql As String =
-        '"SELECT * FROM " & TableName &
-        '" WHERE LectureDate >= " & "@StartDate " &
-        '"   AND LectureDate <= " & "@EndDate " &
-        '";"
-
-        '            Using reader As SqlDataReader = Exec.ExecuteReader(sql, parameters)
-        '                While reader.Read()
-        '                    list.Add(ReaderMapper.Map(Of T)(reader))
-        '                End While
-        '            End Using
-
-        '            Return list
-        '        End Function
-
-
-        '        Public Function FindByLectureDataTable(fromDate As DateTime, toDate As DateTime) As DataTable Implements IAutomaticRepository(Of T).FindByLectureDataTable
-        '            Dim parameters As New List(Of SqlParameter)()
-        '            parameters.Add(New SqlParameter("@StartDate", fromDate))
-        '            parameters.Add(New SqlParameter("@EndDate", toDate))
-        '            Dim list As New List(Of T)()
-
-        '            Dim sql As String =
-        '"SELECT * FROM " & TableName &
-        '" WHERE LectureDate >= " & "@StartDate " &
-        '"   AND LectureDate <= " & "@EndDate " &
-        '";"
-
-        '            Return Exec.ExecuteReaderWithDataTable(sql, parameters)
-        '        End Function
-
     End Class
 
 End Namespace

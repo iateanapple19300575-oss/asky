@@ -14,6 +14,14 @@
     Public Enum AutomaticServiceOperation
 
         ''' <summary>
+        ''' 初期表示状態（通常）を表す。
+        ''' 
+        ''' 主に Repository.DataLoad を呼び出すユースケースで使用される。
+        ''' AutomaticRequest に Id、RowVersion、読込キー等を設定して実行する。
+        ''' </summary>
+        Normal = 0
+
+        ''' <summary>
         ''' 新規登録処理を表す。
         ''' 
         ''' 主に Repository.Insert を呼び出すユースケースで使用される。
