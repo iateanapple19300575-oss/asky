@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports Application.Data
 Imports Framework.Databese.Automatic
 
 ''' <summary>
@@ -11,34 +12,34 @@ Public Class LectureActualQueryService
     ''' <summary>
     ''' 単件取得（Id 指定）。
     ''' </summary>
-    Public Function GetById(id As Integer) As LectureActualEntity
-        Using exec As New SqlExecutor(_connectionString)
-            Dim repo As New LectureActualRepository(exec)
-            Return repo.FindById(id)
-        End Using
-    End Function
+    'Public Function GetById(id As Integer) As MTimetableSiteEntity
+    '    Using exec As New SqlExecutor(_connectionString)
+    '        Dim repo As New MTimetableSiteRepository(exec)
+    '        Return repo.FindById(id)
+    '    End Using
+    'End Function
 
-    ''' <summary>
-    ''' 全件取得。
-    ''' </summary>
-    Public Function GetAll() As List(Of LectureActualEntity)
-        Using exec As New SqlExecutor(_connectionString)
-            Dim repo As New LectureActualRepository(exec)
-            Return repo.FindAll()
-        End Using
-    End Function
+    '''' <summary>
+    '''' 全件取得。
+    '''' </summary>
+    'Public Function GetAll() As List(Of MTimetableSiteEntity)
+    '    Using exec As New SqlExecutor(_connectionString)
+    '        Dim repo As New MTimetableSiteRepository(exec)
+    '        Return repo.FindAll()
+    '    End Using
+    'End Function
 
     ''' <summary>
     ''' 条件検索（開始日で絞り込み）。
     ''' </summary>
-    Public Function FindByLectureData(fromDate As DateTime, toDate As DateTime) As List(Of LectureActualEntity)
+    Public Function FindByLectureData(fromDate As DateTime, toDate As DateTime) As List(Of MTimetableSiteEntity)
         Using exec As New SqlExecutor(_connectionString)
-            Dim repo As New LectureActualRepository(exec)
+            Dim repo As New MTimetableSiteRepository(Of MTimetableSiteEntity)(exec)
             'Return repo.FindByLectureData(fromDate, toDate)
             Dim parameters As New List(Of SqlParameter)()
             parameters.Add(New SqlParameter("@StartDate", fromDate))
             parameters.Add(New SqlParameter("@EndDate", toDate))
-            Dim list As New List(Of LectureActualEntity)()
+            Dim list As New List(Of MTimetableSiteEntity)()
 
             Dim sql As String =
 "SELECT * FROM " & "W_Lecture_Actual" &
@@ -48,7 +49,7 @@ Public Class LectureActualQueryService
 
             Using reader As SqlDataReader = exec.ExecuteReader(sql, parameters)
                 While reader.Read()
-                    list.Add(ReaderMapper.Map(Of LectureActualEntity)(reader))
+                    list.Add(ReaderMapper.Map(Of MTimetableSiteEntity)(reader))
                 End While
             End Using
 
@@ -61,7 +62,7 @@ Public Class LectureActualQueryService
     ''' </summary>
     Public Function FindByDataGrid(fromDate As DateTime, toDate As DateTime) As DataTable
         Using exec As New SqlExecutor(_connectionString)
-            Dim repo As New LectureActualRepository(exec)
+            Dim repo As New MTimetableSiteRepository(Of MTimetableSiteEntity)(exec)
             'Return repo.FindByLectureDataTable(fromDate, toDate)
             Dim parameters As New List(Of SqlParameter)()
             parameters.Add(New SqlParameter("@StartDate", fromDate))
